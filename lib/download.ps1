@@ -628,6 +628,12 @@ function handle_special_urls($url) {
         }
     }
 
+    # Check if the URL is a GitHub URL and if the user has enabled GitHub proxy
+    if ($url -match '^https://github\.com/' -and (get_config GITHUB_PROXY_ENABLED $false)) {
+        $proxyUrl = get_config GITHUB_PROXY_URL 'https://gh-proxy.org/'
+        $url = $proxyUrl + $url
+    }
+
     return $url
 }
 
